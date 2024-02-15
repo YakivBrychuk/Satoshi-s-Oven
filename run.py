@@ -52,10 +52,13 @@ def choose_option():
 
 def main():
     print_welcome_messages()
-
- 
-if __name__ == "__main__":
-    main()
+    user_choice = choose_option()
+    if user_choice == '1':
+        print("Starting a new order...")
+        
+    elif user_choice == '2':
+        print("Checking order status...")
+        
 
 #print(data)
 
