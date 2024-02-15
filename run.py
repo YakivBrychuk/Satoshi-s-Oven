@@ -11,9 +11,10 @@ creds = Credentials.from_service_account_file('creds.json', scopes=SCOPES)
 client = gspread.authorize(creds)
 sheet = client.open('satoshis_oven')
 pizzas = sheet.worksheet('pizzas')
+address = sheet.worksheet('address')
 
 data = pizzas.get_all_values()
-
+print(data)
 # Function to print welcome messages
 def print_welcome_messages():
     
@@ -48,17 +49,37 @@ def choose_option():
             return user_choice
         else:
             print("Invalid input. Please try again./n")
-            
+
+# Function to get address options
+def get_address_options():
+    
+    sheet = client.open('satoshis_oven')  # Open the spreadsheet
+    address_sheet = sheet.worksheet('address')  # Access the 'address' worksheet
+    
+    # Pull all data from the 'address' sheet
+    address_data = address_sheet.get_all_values()
+    
+    # Create a dictionary of addresses
+    addresses = {row[0]: row[1] for row in address_data[1:]}
+      
+    
+    return addresses
+print(get_address_options)
 
 def main():
     print_welcome_messages()
     user_choice = choose_option()
     if user_choice == '1':
         print("Starting a new order...")
-        
+    
+        addresses = get_address_options()
+        print("Available addresses:")
+        for code, address in addresses.items():
+            print(f"{code}. {address}")
+
     elif user_choice == '2':
         print("Checking order status...")
-        
-
-#print(data)
+        print(data)
+if __name__ == "__main__":
+    main()
 
