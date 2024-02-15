@@ -35,9 +35,25 @@ def print_welcome_messages():
     """
     print(welcome_message1, welcome_message2)
 
+# Function to choose an option
+def choose_option():
+    while True:
+        print("\nChoose an option:")
+        print("1. Start a new order")
+        print("2. Check the status of an existing order")
+        
+        user_choice = input("Enter your choice (1 or 2): ")
+        
+        if user_choice in ['1', '2']:
+            return user_choice
+        else:
+            print("Invalid input. Please try again./n")
+            
+
 def main():
     print_welcome_messages()
-    
+
+ 
 if __name__ == "__main__":
     main()
 
