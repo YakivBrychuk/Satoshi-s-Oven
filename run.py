@@ -12,6 +12,7 @@ client = gspread.authorize(creds)
 sheet = client.open('satoshis_oven')
 pizzas = sheet.worksheet('pizzas')
 address = sheet.worksheet('address')
+orders = sheet.worksheet('orders')
 
 data = pizzas.get_all_values()
 print(data)
@@ -50,6 +51,14 @@ def choose_option():
         else:
             print("Invalid input. Please try again./n")
 
+# Function to generate a new order code
+def generate_order_code():
+    order_codes = orders.col_values(1)  
+    numeric_codes = [int(code) for code in order_codes if code.isdigit()]
+    last_order_code = max(numeric_codes, default=0)
+    new_order_code = last_order_code + 1
+    return new_order_code
+
 # Function to get address options
 def get_address_options():
     
@@ -71,6 +80,11 @@ def main():
     user_choice = choose_option()
     if user_choice == '1':
         print("Starting a new order...")
+        new_code = generate_order_code()
+
+        # Write the new order code to the 'orders' sheet
+        orders.append_row([new_code])
+        print(f"Your new order code is {new_code}. Please proceed with your order.")
     
         addresses = get_address_options()
         print("Available addresses:")
@@ -79,7 +93,6 @@ def main():
 
     elif user_choice == '2':
         print("Checking order status...")
-        print(data)
 if __name__ == "__main__":
     main()
 
