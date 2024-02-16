@@ -83,13 +83,24 @@ def main():
         new_code = generate_order_code()
 
         # Write the new order code to the 'orders' sheet
-        orders.append_row([new_code])
-        print(f"Your new order code is {new_code}. Please proceed with your order.")
-    
+        print(f"Your order code is:  {new_code}. Please proceed with your order.")
+
         addresses = get_address_options()
-        print("Available addresses:")
+        print("Available addresses for collection:/n")
         for code, address in addresses.items():
             print(f"{code}. {address}")
+
+        while True:
+            address_choice = input("Please enter the code for your address:")
+            if address_choice in addresses:
+                selected_address = addresses[address_choice]
+                print(f"You selected: {selected_address}/n")
+                break
+            else:
+                print("Invalid address code selected. Please try again./n")
+
+        # Write the selected address to the 'orders' sheet
+        orders.append_row([new_code, selected_address])
 
     elif user_choice == '2':
         print("Checking order status...")
