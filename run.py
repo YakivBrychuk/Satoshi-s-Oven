@@ -75,6 +75,15 @@ def get_address_options():
     return addresses
 print(get_address_options)
 
+# Function to print the menu of pizzas
+def print_pizza_menu():
+    print("\nPlease choose your preferred pizza from the menu by entering the corresponding code")
+    print("\nMenu of Pizzas:")
+    pizza_data = pizzas.get_all_values()
+    for row in pizza_data[1:]:
+        code, name, ingredients = row[:3] 
+        print(f"{code}. {name} - Ingredients: {ingredients}")
+
 def main():
     print_welcome_messages()
     user_choice = choose_option()
@@ -86,12 +95,12 @@ def main():
         print(f"Your order code is:  {new_code}. Please proceed with your order.")
 
         addresses = get_address_options()
-        print("Available addresses for collection:/n")
+        print("Available addresses for collection:")
         for code, address in addresses.items():
             print(f"{code}. {address}")
 
         while True:
-            address_choice = input("Please enter the code for your address:")
+            address_choice = input("Please enter the code for collection address:")
             if address_choice in addresses:
                 selected_address = addresses[address_choice]
                 print(f"You selected: {selected_address}/n")
@@ -101,6 +110,7 @@ def main():
 
         # Write the selected address to the 'orders' sheet
         orders.append_row([new_code, selected_address])
+        print_pizza_menu()
 
     elif user_choice == '2':
         print("Checking order status...")
