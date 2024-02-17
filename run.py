@@ -13,19 +13,20 @@ sheet = client.open('satoshis_oven')
 pizzas = sheet.worksheet('pizzas')
 address = sheet.worksheet('address')
 orders = sheet.worksheet('orders')
+sizes = sheet.worksheet('sizes')
 
 data = pizzas.get_all_values()
-print(data)
+#print(data)
 # Function to print welcome messages
 def print_welcome_messages():
     
     welcome_message1 = """
     ₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿
-    ₿₿██████╗░█████╗░████████╗░█████╗░░██████╗██╗░░██╗██╗░██████╗₿₿░█████╗░██₿₿₿₿██╗███████╗███₿₿₿██₿
-    ₿██₿₿₿₿₿╝██╔══██╗╚══██╔══╝██╔══██╗██₿₿₿₿₿╝██║░░██║██║██₿₿₿₿₿╝₿₿██₿₿₿██╗██₿₿₿₿██║██₿₿₿₿₿╝███₿₿₿██₿
-    ₿₿█████╗░███████║░░░██║░░░██║░░██║╚█████╗░███████║██║╚█████╗░₿₿██₿₿₿██║╚██₿₿██╔╝█████╗░░██₿██₿██₿
-    ₿₿₿₿₿₿██╗██╔══██║░░░██║░░░██║░░██║₿₿₿₿₿██╗██╔══██║██║₿₿₿₿₿██╗₿₿██₿₿₿██║░╚████╔╝░██₿₿₿₿₿░██₿₿████₿
-    ₿██████╔╝██║░░██║░░░██║░░░╚█████╔╝██████╔╝██║░░██║██║██████╔╝₿₿₿█████╔╝░░╚██╔╝░░███████╗██₿₿₿███₿
+    ₿₿██████₿₿█████₿₿████████₿₿█████₿₿₿██████╗██₿₿₿██╗██╗░██████₿₿₿₿█████₿₿██₿₿₿₿██╗███████╗███₿₿₿██₿
+    ₿██₿₿₿₿₿₿██╔══██₿₿₿₿██₿₿₿₿██╔══██╗██₿₿₿₿₿₿██₿₿₿██║██║██₿₿₿₿₿₿₿₿██₿₿₿██╗██₿₿₿₿██║██₿₿₿₿₿╝███₿₿₿██₿
+    ₿₿█████₿₿███████₿₿₿₿██₿₿₿₿██║░░██₿₿█████₿₿███████║██║╚█████₿₿₿₿██₿₿₿██₿₿██₿₿██₿₿█████₿₿₿██₿██₿██₿
+    ₿₿₿₿₿₿██╗██╔══██₿₿₿₿██₿₿₿₿██║░░██₿₿₿₿₿₿██╗██₿₿₿██║██║₿₿₿₿₿██₿₿₿██₿₿₿██₿₿₿████₿₿₿██₿₿₿₿₿₿██₿₿████₿
+    ₿██████₿₿██║░░██₿₿₿₿██₿₿₿₿₿█████₿₿██████₿₿██₿₿₿██║██║██████₿₿₿₿₿█████₿₿₿₿₿██₿₿₿₿███████╗██₿₿₿███₿
     ₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿₿                   
     """
     welcome_message2 = """
@@ -84,6 +85,19 @@ def print_pizza_menu():
         code, name, ingredients = row[:3] 
         print(f"{code}. {name} - Ingredients: {ingredients}")
 
+# Function to get pizza sizes
+def get_pizza_sizes():
+    
+    sizes_data = sizes.get_all_values()
+    sizes_dict = {row[0]: {'Size': row[1], 'Price': row[2]} for row in sizes_data[1:]}
+    return sizes_dict
+
+# Function to print pizza sizes
+def print_pizza_sizes(sizes_dict):
+    print("Available Pizza Sizes:")
+    for code, info in sizes_dict.items():
+        print(f"{code}. {info['Size']} - Price: {info['Price']}")
+
 def main():
     print_welcome_messages()
     user_choice = choose_option()
@@ -91,11 +105,11 @@ def main():
         print("Starting a new order...")
         new_code = generate_order_code()
 
-        # Write the new order code to the 'orders' sheet
+        
         print(f"Your order code is:  {new_code}. Please proceed with your order.")
 
         addresses = get_address_options()
-        print("Available addresses for collection:")
+        print("Available addresses for collection:/n")
         for code, address in addresses.items():
             print(f"{code}. {address}")
 
@@ -109,21 +123,33 @@ def main():
                 print("Invalid address code selected. Please try again./n")
 
         print_pizza_menu()
-        pizza_choice = input("Please enter the code for your chosen pizza: ")
-        
-        # Find the pizza name and description based on the code
+
         pizza_data = pizzas.get_all_values()
-        pizza_dict = {row[0]: row[1:] for row in pizza_data[1:]}  # Create a dict with code as key
-        if pizza_choice in pizza_dict:
-            selected_pizza = pizza_dict[pizza_choice]
-            print(f"You have selected: {selected_pizza[0]} - {selected_pizza[1]}")
-        else:
-            print("Invalid pizza code selected. Please try again.")
-            return  # Exit or you can loop until valid input is given
+        pizza_dict = {row[0]: row[1:] for row in pizza_data[1:]} 
+        while True:
+            pizza_choice = input("Please enter the code for your chosen pizza: ")
+            if pizza_choice in pizza_dict:
+                selected_pizza = pizza_dict[pizza_choice]
+                print(f"You have selected: {selected_pizza[0]} - {selected_pizza[1]}")
+                break  
+            else:
+                print("Invalid pizza code selected. Please try again.")
         
-        # Write the selected address to the 'orders' sheet
-        #orders.append_row([new_code, selected_address])
-        orders.append_row([new_code, selected_address, selected_pizza[0], selected_pizza[1]])
+
+        sizes_dict = get_pizza_sizes()
+        print_pizza_sizes(sizes_dict)
+        size_choice = input("Please enter R or L code for your chosen size: ")
+        while size_choice not in sizes_dict:
+            print("Invalid size code selected. Please try again.")
+            size_choice = input("Please enter R or L code for your chosen size: ")
+        selected_size = sizes_dict[size_choice]
+        print(f"You have selected: {selected_size['Size']} - Price: {selected_size['Price']}")
+            
+        
+        orders_row = new_code 
+        
+        orders.append_row([new_code, selected_address, selected_pizza[0], selected_pizza[1], selected_size['Size'], "", "", "", selected_size['Price']])
+
 
     elif user_choice == '2':
         print("Checking order status...")
