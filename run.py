@@ -108,9 +108,22 @@ def main():
             else:
                 print("Invalid address code selected. Please try again./n")
 
-        # Write the selected address to the 'orders' sheet
-        orders.append_row([new_code, selected_address])
         print_pizza_menu()
+        pizza_choice = input("Please enter the code for your chosen pizza: ")
+        
+        # Find the pizza name and description based on the code
+        pizza_data = pizzas.get_all_values()
+        pizza_dict = {row[0]: row[1:] for row in pizza_data[1:]}  # Create a dict with code as key
+        if pizza_choice in pizza_dict:
+            selected_pizza = pizza_dict[pizza_choice]
+            print(f"You have selected: {selected_pizza[0]} - {selected_pizza[1]}")
+        else:
+            print("Invalid pizza code selected. Please try again.")
+            return  # Exit or you can loop until valid input is given
+        
+        # Write the selected address to the 'orders' sheet
+        #orders.append_row([new_code, selected_address])
+        orders.append_row([new_code, selected_address, selected_pizza[0], selected_pizza[1]])
 
     elif user_choice == '2':
         print("Checking order status...")
