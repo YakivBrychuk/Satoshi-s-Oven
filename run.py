@@ -14,6 +14,7 @@ pizzas = sheet.worksheet('pizzas')
 address = sheet.worksheet('address')
 orders = sheet.worksheet('orders')
 sizes = sheet.worksheet('sizes')
+cheese = sheet.worksheet('cheese')
 
 data = pizzas.get_all_values()
 #print(data)
@@ -63,8 +64,8 @@ def generate_order_code():
 # Function to get address options
 def get_address_options():
     
-    sheet = client.open('satoshis_oven')  # Open the spreadsheet
-    address_sheet = sheet.worksheet('address')  # Access the 'address' worksheet
+    sheet = client.open('satoshis_oven')  
+    address_sheet = sheet.worksheet('address')
     
     # Pull all data from the 'address' sheet
     address_data = address_sheet.get_all_values()
@@ -97,6 +98,18 @@ def print_pizza_sizes(sizes_dict):
     print("Available Pizza Sizes:")
     for code, info in sizes_dict.items():
         print(f"{code}. {info['Size']} - Price: {info['Price']}")
+
+# Function to get cheese options
+def get_cheese_options():
+    cheese_data = cheese.get_all_values()
+    cheese_options = {row[0]: row[1] for row in cheese_data[1:]}  
+    return cheese_options
+
+# Function to print cheese options
+def print_cheese_options(cheese_dict):
+    print("Available Cheese Options:")
+    for code, cheese_type in cheese_dict.items():
+        print(f"{code}. {cheese_type}")
 
 def main():
     print_welcome_messages()
@@ -144,11 +157,22 @@ def main():
             size_choice = input("Please enter R or L code for your chosen size: ")
         selected_size = sizes_dict[size_choice]
         print(f"You have selected: {selected_size['Size']} - Price: {selected_size['Price']}")
-            
+        
+        # Cheese selection logic
+        cheese_options = get_cheese_options()
+        print_cheese_options(cheese_options)
+        while True:
+            cheese_choice = input("Please enter the code for your chosen cheese option: ")
+            if cheese_choice in cheese_options:
+                selected_cheese = cheese_options[cheese_choice]
+                print(f"You have selected: {selected_cheese}")
+                break
+            else:
+                print("Invalid cheese code selected. Please try again.")
         
         orders_row = new_code 
         
-        orders.append_row([new_code, selected_address, selected_pizza[0], selected_pizza[1], selected_size['Size'], "", "", "", selected_size['Price']])
+        orders.append_row([new_code, selected_address, selected_pizza[0], selected_pizza[1], selected_size['Size'], selected_cheese, "", "", selected_size['Price']])
 
 
     elif user_choice == '2':
