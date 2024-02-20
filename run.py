@@ -51,7 +51,7 @@ def choose_option():
         if user_choice in ['1', '2']:
             return user_choice
         else:
-            print("Invalid input. Please try again./n")
+            print("Invalid input. Please try again.\n")
 
 # Function to generate a new order code
 def generate_order_code():
@@ -122,7 +122,7 @@ def main():
         print(f"Your order code is:  {new_code}. Please proceed with your order.")
 
         addresses = get_address_options()
-        print("Available addresses for collection:/n")
+        print("Available addresses for collection:\n")
         for code, address in addresses.items():
             print(f"{code}. {address}")
 
@@ -130,7 +130,7 @@ def main():
             address_choice = input("Please enter the code for collection address:")
             if address_choice in addresses:
                 selected_address = addresses[address_choice]
-                print(f"You selected: {selected_address}/n")
+                print(f"You selected: {selected_address}\n")
                 break
             else:
                 print("Invalid address code selected. Please try again./n")
