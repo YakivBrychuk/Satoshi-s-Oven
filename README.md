@@ -121,3 +121,15 @@ Satoshi's Oven is an engaging pizza ordering experience that blends the art of p
     * To deploy the project.
 * [CI Python Linter](https://pep8ci.herokuapp.com/)
     * Check code for any issues.
+
+
+## Testing 
+
+CI Python Linter was used to test run.py
+
+<details>
+<summary> run.py CI Python Linter check
+</summary>
+
+![run.py linter check](/readme_images/lintercheck.png)
+</details>
