@@ -21,19 +21,22 @@ toppings = sheet.worksheet('toppings')
 payment_methods = sheet.worksheet('payment_method')
 
 data = pizzas.get_all_values()
-#print(data)
+
 # Function to print welcome messages
+
+
 def print_welcome_messages():
-    
+
     welcome_message1 = """
-    Welcome to Satoshi's Oven!₿🍕                                                                                                                                                                                                                                                         
+    Welcome to Satoshi's Oven!₿🍕                                                             
     """
     welcome_message2 = """
     Greetings from Satoshi's Oven, where tradition bakes with innovation. 
     Our pizzas are a tribute to the spirit of Satoshi Nakamoto, 
     blending classic flavors with the modern twist of cryptocurrency payments. 
     Perfect for the crypto-curious and the digital devotee alike, 
-    Satoshi's Oven offers a warm welcome to all who seek delicious pizza and a slice of digital freedom.
+    Satoshi's Oven offers a warm welcome to all 
+    who seek delicious pizza and a slice of digital freedom.
     """
     print(welcome_message1, welcome_message2)
 
@@ -73,7 +76,10 @@ def get_address_options():
       
     
     return addresses
+    
+    
 print(get_address_options)
+
 
 # Function to print the menu of pizzas
 def print_pizza_menu():
@@ -111,13 +117,16 @@ def print_cheese_options(cheese_dict):
         print(f"{code}. {cheese_type}")
 
 # Constants for additional costs
+
+
 CHEESE_COST = 1.5
 TOPPING_COST = 1.5
+
 
 # Function to get toppings options
 def get_toppings_options():
     toppings_data = toppings.get_all_values()
-    toppings_options = {row[0]: row[1] for row in toppings_data[1:]}  # Assuming the first column has codes and the second has toppings names
+    toppings_options = {row[0]: row[1] for row in toppings_data[1:]} 
     return toppings_options
 
 # Function to print toppings options
@@ -233,7 +242,7 @@ def main():
             pizza_choice = input("Please enter the code for your chosen pizza: ")
             if pizza_choice in pizza_dict:
                 selected_pizza = pizza_dict[pizza_choice]
-                print(f"You have selected: {selected_pizza[0]} - {selected_pizza[1]}")
+                print(f"You selected: {selected_pizza[0]} - {selected_pizza[1]}")
                 
                 break  
             else:
@@ -244,25 +253,26 @@ def main():
         print_pizza_sizes(sizes_dict)
         print()
         size_choice = input("Please enter R or L code for your chosen size: ")
+        
         if(size_choice == 'R' or size_choice == 'r'):
-                size_choice = 'R'
+            size_choice = 'R'
         elif(size_choice == 'L' or size_choice == 'l'):
-                size_choice = 'L'
+            size_choice = 'L'
         while size_choice not in sizes_dict:
             print("Invalid size code selected. Please try again.")
-            size_choice = input("Please enter R or L code for your chosen size: ")
+            size_choice = input("Please enter R or L code for your size: ")
 
         selected_size = sizes_dict[size_choice]
         total_price += float(selected_size['Price'])
         print()
-        print(f"You have selected: {selected_size['Size']} - Price: {selected_size['Price']}")
+        print(f"You selected: {selected_size['Size']} - {selected_size['Price']}")
         
         # Cheese selection logic
         cheese_options = get_cheese_options()
         print_cheese_options(cheese_options)
         print()
         while True:
-            cheese_choice = input("Please enter the code for your chosen cheese option: ")
+            cheese_choice = input("Enter the code of your cheese option: ")
             if cheese_choice in cheese_options:
                 selected_cheese = cheese_options[cheese_choice]
                 print(f"You have selected: {selected_cheese}")
@@ -307,7 +317,7 @@ def main():
         orders.append_row(order_data)
 
         # After appending, the new order should be at the last row of the sheet
-        number_of_rows = len(orders.get_all_values()) #+ 1  Adding 1 because the row count includes the header row
+        number_of_rows = len(orders.get_all_values())
 
         while True:
             finish_choice = input("Type 'finish' to complete your order or 'edit' to make changes: ").lower()
