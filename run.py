@@ -9,6 +9,7 @@ SCOPES = [
 
 creds = Credentials.from_service_account_file('creds.json', scopes=SCOPES)
 client = gspread.authorize(creds)
+
 sheet = client.open('satoshis_oven')
 pizzas = sheet.worksheet('pizzas')
 address = sheet.worksheet('address')
@@ -16,6 +17,7 @@ orders = sheet.worksheet('orders')
 sizes = sheet.worksheet('sizes')
 cheese = sheet.worksheet('cheese')
 toppings = sheet.worksheet('toppings')
+payment_methods = sheet.worksheet('payment_method')
 
 data = pizzas.get_all_values()
 #print(data)
@@ -23,13 +25,7 @@ data = pizzas.get_all_values()
 def print_welcome_messages():
     
     welcome_message1 = """
-░██████╗░█████╗░████████╗░█████╗░░██████╗██╗░░██╗██╗░██████╗  ░█████╗░██╗░░░██╗███████╗███╗░░██╗
-██╔════╝██╔══██╗╚══██╔══╝██╔══██╗██╔════╝██║░░██║██║██╔════╝  ██╔══██╗██║░░░██║██╔════╝████╗░██║
-╚█████╗░███████║░░░██║░░░██║░░██║╚█████╗░███████║██║╚█████╗░  ██║░░██║╚██╗░██╔╝█████╗░░██╔██╗██║
-░╚═══██╗██╔══██║░░░██║░░░██║░░██║░╚═══██╗██╔══██║██║░╚═══██╗  ██║░░██║░╚████╔╝░██╔══╝░░██║╚████║
-██████╔╝██║░░██║░░░██║░░░╚█████╔╝██████╔╝██║░░██║██║██████╔╝  ╚█████╔╝░░╚██╔╝░░███████╗██║░╚███║
-╚═════╝░╚═╝░░╚═╝░░░╚═╝░░░░╚════╝░╚═════╝░╚═╝░░╚═╝╚═╝╚═════╝░  ░╚════╝░░░░╚═╝░░░╚══════╝╚═╝░░╚══╝                                                                                                                                                                                                    
-                                                                                                                                                                                                                                                                 
+    Welcome to Satoshi's Oven! ₿🍕                                                                                                                                                                                                                                                         
     """
     welcome_message2 = """
     Greetings from Satoshi's Oven, where tradition bakes with innovation. 
@@ -125,6 +121,30 @@ def print_toppings_options(toppings_dict):
     for code, topping in toppings_dict.items():
         print(f"{code}. {topping}")
 
+# Function to get payment methods
+def get_payment_methods():
+    payment_methods_data = payment_methods.get_all_values()
+    payment_options = {row[0]: {'Method': row[1], 'Symbol': row[2]} for row in payment_methods_data[1:]}
+    return payment_options
+
+# Function to print payment method options and to choose a payment method
+def choose_payment_method():
+    payment_options = get_payment_methods()
+    print("\nAvailable Payment Methods:")
+    for code, info in payment_options.items():
+        print(f"{code}. {info['Method']} - {info['Symbol']}")
+
+    print("\nPlease choose your preferred payment method by entering the corresponding code (C for Crypto, F for Fiat/Eur): ")
+    while True:
+        payment_choice = input().upper()
+        if payment_choice in payment_options:
+            selected_payment_method = payment_options[payment_choice]
+            print(f"You have selected: {selected_payment_method['Method']}")
+            return selected_payment_method
+        else:
+            print("Invalid payment method code selected. Please try again.")
+
+
 def main():
     print_welcome_messages()
     user_choice = choose_option()
@@ -209,8 +229,10 @@ def main():
                 print("Invalid toppings code selected. Please try again.")
         
         selected_toppings_str = ', '.join(selected_toppings)
+
+        selected_payment_method = choose_payment_method()
         
-        orders.append_row([new_code, selected_address, selected_pizza[0], selected_pizza[1], selected_size['Size'], selected_cheese, selected_toppings_str, "", selected_size['Price']])
+        orders.append_row([new_code, selected_address, selected_pizza[0], selected_pizza[1], selected_size['Size'], selected_cheese, selected_toppings_str, selected_payment_method['Method'], selected_size['Price']])
         
         orders_row = new_code 
 
