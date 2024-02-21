@@ -143,11 +143,34 @@ def choose_payment_method():
         payment_choice = input().upper()
         if payment_choice in payment_options:
             selected_payment_method = payment_options[payment_choice]
-            print(f"You have selected: {selected_payment_method['Method']}")
+            print(f"You have selected: {selected_payment_method['Symbol']}")
             return selected_payment_method
         else:
             print("Invalid payment method code selected. Please try again.")
 
+# Function to check the status of an existing order
+def check_order_status():
+    order_number = input("Please input your order number: ")
+    
+    try:
+        
+        order = orders.find(order_number)
+        order_row = orders.row_values(order.row)
+        
+        # Format and display the order details
+        print("Here are the details of your order:")
+        print(f"Order Number: {order_row[0]}")
+        print(f"Address: {order_row[1]}")
+        print(f"Pizza: {order_row[2]}")
+        print(f"Ingredients: {order_row[3]}")
+        print(f"Size: {order_row[4]}")
+        print(f"Cheese: {order_row[5]}")
+        print(f"Toppings: {order_row[6]}")
+        print(f"Payment Method: {order_row[7]}")
+        print(f"Total Price: {order_row[8]}")
+        
+    except gspread.exceptions.CellNotFound:
+        print("Order number not found. Please try again.")
 
 def main():
     print_welcome_messages()
@@ -229,8 +252,13 @@ def main():
         selected_toppings = []  # To store selected toppings
         while True:
             toppings_choice = input("Please enter the code for your chosen toppings (enter 'done' when finished): ")
-            if toppings_choice.lower() == 'done':
+            
+            if toppings_choice.lower() == 'done' and selected_toppings:
                 break
+            elif toppings_choice == '0':  # If "No Toppings" is selected
+                selected_toppings.append(toppings_options[toppings_choice])
+                print(f"You have added: {toppings_options[toppings_choice]}")
+                break  # Break immediately after "No Toppings" is selected
             elif toppings_choice in toppings_options:
                 selected_toppings.append(toppings_options[toppings_choice])
                 print(f"You have added: {toppings_options[toppings_choice]}")
@@ -251,7 +279,7 @@ def main():
         orders_row = new_code 
 
     elif user_choice == '2':
-        print("Checking order status...")
+        check_order_status()
 
 if __name__ == "__main__":
     main()
