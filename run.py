@@ -170,8 +170,11 @@ def check_order_status():
         print(f"Payment Method: {order_row[7]}")
         print(f"Total Price: {order_row[8]}")
         
-    except gspread.exceptions.CellNotFound:
-        print("Order number not found. Please try again.")
+    except Exception as e:
+        if "CellNotFound" in str(e):
+            print("You don't have access to this order or it doesn't exist.")
+        else:
+            print("You don't have access to this order or it doesn't exist.")
 
 # Function to print order summary
 def print_order_summary(new_code, selected_address, selected_pizza, selected_size, selected_cheese, selected_toppings_str, selected_payment_method, total_price):
@@ -189,9 +192,9 @@ def print_order_summary(new_code, selected_address, selected_pizza, selected_siz
 
 # Function to update the order status
 def update_order_status(row_number, status):
-    # Assuming the 'Status' column is the 10th column (column J)
+    
     status_column_index = 10
-    # Update the status cell in the specific row for the order
+    
     orders.update_cell(row_number, status_column_index, status)
   
 
