@@ -109,6 +109,10 @@ def print_cheese_options(cheese_dict):
     for code, cheese_type in cheese_dict.items():
         print(f"{code}. {cheese_type}")
 
+# Constants for additional costs
+CHEESE_COST = 1.5
+TOPPING_COST = 1.5
+
 # Function to get toppings options
 def get_toppings_options():
     toppings_data = toppings.get_all_values()
@@ -149,6 +153,7 @@ def main():
     print_welcome_messages()
     user_choice = choose_option()
     if user_choice == '1':
+        total_price = 0
         print("Starting a new order...")
         new_code = generate_order_code()
         print(f"Your order code is: {new_code}. Please proceed with your order.")
@@ -180,6 +185,7 @@ def main():
             if pizza_choice in pizza_dict:
                 selected_pizza = pizza_dict[pizza_choice]
                 print(f"You have selected: {selected_pizza[0]} - {selected_pizza[1]}")
+                
                 break  
             else:
                 print("Invalid pizza code selected. Please try again.")
@@ -198,6 +204,7 @@ def main():
             size_choice = input("Please enter R or L code for your chosen size: ")
 
         selected_size = sizes_dict[size_choice]
+        total_price += float(selected_size['Price'])
         print()
         print(f"You have selected: {selected_size['Size']} - Price: {selected_size['Price']}")
         
@@ -210,6 +217,8 @@ def main():
             if cheese_choice in cheese_options:
                 selected_cheese = cheese_options[cheese_choice]
                 print(f"You have selected: {selected_cheese}")
+                if selected_cheese != "No cheese":
+                    total_price += CHEESE_COST
                 break
             else:
                 print("Invalid cheese code selected. Please try again.")
@@ -229,10 +238,15 @@ def main():
                 print("Invalid toppings code selected. Please try again.")
         
         selected_toppings_str = ', '.join(selected_toppings)
+        for topping in selected_toppings:
+        # Add the TOPPING_COST for each selected topping
+         total_price += TOPPING_COST
 
         selected_payment_method = choose_payment_method()
         
-        orders.append_row([new_code, selected_address, selected_pizza[0], selected_pizza[1], selected_size['Size'], selected_cheese, selected_toppings_str, selected_payment_method['Method'], selected_size['Price']])
+        print(f"Your total is: {total_price} EUR")
+
+        orders.append_row([new_code, selected_address, selected_pizza[0], selected_pizza[1], selected_size['Size'], selected_cheese, selected_toppings_str, selected_payment_method['Method'], total_price])
         
         orders_row = new_code 
 
