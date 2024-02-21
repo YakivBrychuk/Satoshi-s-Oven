@@ -328,10 +328,18 @@ def main():
                 print(f"Your total is: {total_price} {selected_payment_method['Symbol']}")
                 
             orders_row = new_code 
-
+    
     elif user_choice == '2':
         check_order_status()
 
+    print()
+    print("The order has been processed successfully!")
+    print()
+    print("The application is now closing. Thank you for using Satoshi's Oven.")
+    print()
+    print("We look forward to seeing you soon at the collection point. Enjoy your meal!")
+    print()
+    print("Goodbye!")
 if __name__ == "__main__":
     main()
 
