@@ -1,6 +1,7 @@
 import gspread
 from google.oauth2.service_account import Credentials
 
+
 SCOPES = [
     'https://www.googleapis.com/auth/spreadsheets',
     'https://www.googleapis.com/auth/drive.file',
@@ -25,7 +26,7 @@ data = pizzas.get_all_values()
 def print_welcome_messages():
     
     welcome_message1 = """
-    Welcome to Satoshi's Oven! ₿🍕                                                                                                                                                                                                                                                         
+    Welcome to Satoshi's Oven!₿🍕                                                                                                                                                                                                                                                         
     """
     welcome_message2 = """
     Greetings from Satoshi's Oven, where tradition bakes with innovation. 
@@ -172,6 +173,28 @@ def check_order_status():
     except gspread.exceptions.CellNotFound:
         print("Order number not found. Please try again.")
 
+# Function to print order summary
+def print_order_summary(new_code, selected_address, selected_pizza, selected_size, selected_cheese, selected_toppings_str, selected_payment_method, total_price):
+    print("\nOrder Summary:")
+    print(f"Order Number: {new_code}")
+    print(f"Collection Address: {selected_address}")
+    print(f"Pizza: {selected_pizza[0]}")
+    print(f"Size: {selected_size['Size']}")
+    print(f"Cheese: {selected_cheese}")
+    print(f"Toppings: {selected_toppings_str}")
+    print(f"Payment Method: {selected_payment_method['Method']}")
+    print(f"Total Price: {total_price} {selected_payment_method['Symbol']}")
+    print("\nPlease review your order. If everything is correct, type 'finish' to complete your order.")
+
+
+# Function to update the order status
+def update_order_status(row_number, status):
+    # Assuming the 'Status' column is the 10th column (column J)
+    status_column_index = 10
+    # Update the status cell in the specific row for the order
+    orders.update_cell(row_number, status_column_index, status)
+  
+
 def main():
     print_welcome_messages()
     user_choice = choose_option()
@@ -258,7 +281,7 @@ def main():
             elif toppings_choice == '0':  # If "No Toppings" is selected
                 selected_toppings.append(toppings_options[toppings_choice])
                 print(f"You have added: {toppings_options[toppings_choice]}")
-                break  # Break immediately after "No Toppings" is selected
+                break  # Break after "No Toppings" is selected
             elif toppings_choice in toppings_options:
                 selected_toppings.append(toppings_options[toppings_choice])
                 print(f"You have added: {toppings_options[toppings_choice]}")
@@ -271,16 +294,44 @@ def main():
          total_price += TOPPING_COST
 
         selected_payment_method = choose_payment_method()
-        
-        print(f"Your total is: {total_price} EUR")
+        print_order_summary(new_code, selected_address, selected_pizza, selected_size, selected_cheese, selected_toppings_str, selected_payment_method, total_price)
+        print()
+        # Prompt user to finish or edit the order
+        order_data = [
+        new_code, selected_address, selected_pizza[0], selected_pizza[1], 
+        selected_size['Size'], selected_cheese, selected_toppings_str, 
+        selected_payment_method['Method'], str(total_price), ""]
+        orders.append_row(order_data)
 
-        orders.append_row([new_code, selected_address, selected_pizza[0], selected_pizza[1], selected_size['Size'], selected_cheese, selected_toppings_str, selected_payment_method['Method'], total_price])
-        
-        orders_row = new_code 
+        # After appending, the new order should be at the last row of the sheet
+        number_of_rows = len(orders.get_all_values()) #+ 1  Adding 1 because the row count includes the header row
+
+        while True:
+            finish_choice = input("Type 'finish' to complete your order or 'edit' to make changes: ").lower()
+            if finish_choice == 'finish':
+                print("Thank you for your order! Your delicious pizza will be ready soon.")
+                # Update the status for the new order row
+                update_order_status(number_of_rows, "Processed")
+                break
+            elif finish_choice == 'edit':
+                # Implement edit functionality if needed
+                print("Edit functionality is not yet implemented.")
+                update_order_status(number_of_rows, "Processed")
+                print("Thank you for your order! Your delicious pizza will be ready soon.")
+                break
+            else:
+                print("Invalid input. Please type 'finish' to complete your order or 'edit' to make changes.")
+
+                print(f"Your total is: {total_price} {selected_payment_method['Symbol']}")
+                
+            orders_row = new_code 
 
     elif user_choice == '2':
         check_order_status()
 
 if __name__ == "__main__":
     main()
+
+
+
 
