@@ -12,10 +12,9 @@ On completion, a warm message confirms the order and invites customers to the co
 - - -
 
 ## Table of Contents
-### [How to play](#how-to-play-1)
+### [How to Order](#how-to-order)
 ### [Logic Flowchart](#logic-flowchart-1)
 ### [User Experience (UX)](#user-experience-ux-1)
-* [User Stories](#user-stories)
 ### [Features](#features-1)
 ### [Features Left to Implement](#features-left-to-implement-1)
 ### [Design](#design-1)
@@ -203,6 +202,8 @@ By forking the repository, we make a copy of the original repository on our GitH
 5. Change the current working directory to the location where you want the cloned directory to be made.
 6. Type `git clone` and then paste The URL copied in the step 3.
 7. Press Enter and your local clone will be created.
+
+## Credits
 
 ### Code
 
