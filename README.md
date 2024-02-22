@@ -158,8 +158,15 @@ The prtogram was manually tested extensively using VS code terminal, and when de
 | Display final order summary & goodbye message  | Display final order summary & goodbye message | Input finish     | As Expected   | ![Repeat Order](/readme_images/final_message.png) |
 
 ## Fixed Bugs
+* Heroku Deployment Error due to pywin32 Dependency
 
-* Bug
+   * Issue: The application failed to deploy on Heroku because pywin32, a package designed for Windows, was listed in requirements.txt, causing a build failure on Heroku's Linux-based environment.
+   * Solution: The recommendation was to remove pywin32 from requirements.txt or conditionally include it for Windows environments only, using environment markers in requirements.txt.
+
+* Incorrect IPython Version for Python Runtime
+
+   * Issue: A specific version of IPython required for the project was incompatible with the Python version defined in runtime.txt, leading to deployment issues.
+   * Solution: Two potential solutions were proposed: updating the runtime.txt to specify a compatible Python version or adjusting the requirements.txt to use a version of IPython compatible with the current Python runtime.
 
 ## Deployment
 
@@ -197,4 +204,14 @@ By forking the repository, we make a copy of the original repository on our GitH
 6. Type `git clone` and then paste The URL copied in the step 3.
 7. Press Enter and your local clone will be created.
 
+### Code
+
+* I gained understanding of python through code institute lessons.
+* I gained more python concepts through 100 Days of Code: The Complete Python Pro Bootcamp by Dr. Angela Yu.
+* MDN web docs for python [Documentation](https://developer.mozilla.org/en-US/docs/Glossary/Python).
+
+## Acknowledgements
+
+ * My mentor [Mitko Bachvarov](https://www.linkedin.com/in/mitko-bachvarov-40b50776/) who provided helpful feedback.
+ * Slack community for encouragement.
 
