@@ -17,7 +17,6 @@ On completion, a warm message confirms the order and invites customers to the co
 ### [User Experience (UX)](#user-experience-ux-1)
 * [User Stories](#user-stories)
 ### [Features](#features-1)
-* [Existing Features](#existing-features)
 ### [Features Left to Implement](#features-left-to-implement-1)
 ### [Design](#design-1)
 ### [Technologies Used](#technologies-used-1)
@@ -142,13 +141,60 @@ The prtogram was manually tested extensively using VS code terminal, and when de
 |---------------------------|-------------------------------------------------------------------|----------------------------------------------|---------------|--------------------------------------|
 | Welcome Screen            | Display welcome message | Open application                             | As Expected   | ![Welcome Screen](/readme_images/welcome_stage1.png) |
 | Menu Options              | Display menu options (New Order, Check Status)                  | Select 1 or 2                        | As Expected   | ![Menu Options](/readme_images/welcome_stage1.png) |
-| Start new order        | Show List of available locations for collection   | Input "1" from menu options | As Expected   | ![Start New Order](/readme_images/welcome_option1.png) |
-| Input invalid entry in menu of options              | Display a message: Invalid input, try again |  Input invalid option                        | As Expected   | ![Choose Pizza](/readme_images/welcone_invalid_option.png) |
-| Check the status of existing order          | Display message to input order number                  | Input 2 into options menu                    | As Expected   | ![Customize Pizza](/readme_images/test_option2_first_menu.png) |
-| Display Order     | Display the order details                                 | Input Order number         | As Expected   | ![Select Payment Method](/readme_images/display_order_option2.png) |
-| Input Invalid Order Number            | Display: You don't have access to this order or it doesn't exist.             | Input random number                         | As Expected   | ![Order Summary](/readme_images/message_invalid_order_nr.png) |
-| Final Confirmation        | Confirm and place the order                                       | Confirm order details                        | As Expected   | ![Final Confirmation]() |
-| Order Status              | Check the status of an existing order                             | Input order number to check status           | As Expected   | ![Order Status]() |
-| Repeat Order/Play Again   | Option to order more or finalize the session                      | Choose to order more or finalize             | As Expected   | ![Repeat Order]() |
-| Exit Application          | Close the application                                             | Choose to exit application                   | As Expected   | ![Exit Application]() |
+| Start new order           | Show List of available locations for collection   | Input "1" from menu options | As Expected   | ![Start New Order](/readme_images/welcome_option1.png) |
+| Input invalid entry in menu of options | Display a message: Invalid input, try again |  Input invalid option                        | As Expected   | ![Choose Pizza](/readme_images/welcone_invalid_option.png) |
+| Check the status of existing order          | Display message to input order number           | Input 2 into options menu                    | As Expected   | ![Customize Pizza](/readme_images/test_option2_first_menu.png) |
+| Display Order             | Display the order details                                         | Input Order number         | As Expected   | ![Select Payment Method](/readme_images/display_order_option2.png) |
+| Input Invalid Order Number| Display: You don't have access to this order or it doesn't exist. | Input random number                         | As Expected   | ![Order Summary](/readme_images/message_invalid_order_nr.png) |
+| Selecting Address Option        | Display Address Selected and procede to Pizza Menu          | Input number of address 1 or 2 | As Expected   | ![Final Confirmation](/readme_images/address_selection.png) |
+| Invalid Input Address Option | Display invalid entry                            | Input invalid entry           | As Expected   | ![Order Status](/readme_images/invalid_address.png) |
+| Display Size menu & make choice| Confirm Size Selection & procede to cheese selection menu                      | Input code number of selected size            | As Expected   | ![Repeat Order](/readme_images/piza_code_selection.png) |
+| Input Invalid code selection for size option   | Confirm Invalid Selection & ask to try again | Input Invalid code number for size selection            | As Expected   | ![Repeat Order](/readme_images/invalid_size.png) |
+| Input cheese code selection   | Confirm cheese Selection & procede to Payment Method Selection | Input code number of selected cheese            | As Expected   | ![Repeat Order](/readme_images/cheese_selection.png) |
+| Display Toppings menu  | Display Selection menu of Toppings | none(its loaded automatically after selecting cheese option)           | As Expected   | ![Repeat Order](/readme_images/toppings_menu.png) |
+| Select indefinite nr of toppings until user inputs 'done'  | Display Selection , after typing 'done' procede to Payment Methods selection Menu | Input code number of toppings & 'done'          | As Expected   | ![Repeat Order](/readme_images/select_toppings.png) |
+| Display Payment method menu  | Display Selection Payment method menu  | none(its loaded automatically after toppings menu)           | As Expected   | ![Repeat Order](/readme_images/payment_method.png) |
+| Display Selected Payment ,Display Order Sumary and finish option  | Display Selected Payment ,Display Order Sumary and finish option | Input Letter C or F       | As Expected   | ![Repeat Order](/readme_images/final_display.png) |
+| Display final order summary & goodbye message  | Display final order summary & goodbye message | Input finish     | As Expected   | ![Repeat Order](/readme_images/final_message.png) |
+
+## Fixed Bugs
+
+* Bug
+
+## Deployment
+
+### Deploying to Heroku
+
+To deploy with Heroku, Code Institute Python Essentials Template was used so the python code can be viewed in a terminal in a browser
+1. Log in to Heroku or create a new account
+2. On the main page click "New" and select "Create new app"
+3. Choose your unique app name and select your region
+4. Click "Create app"
+5. On the next page find "settings" and locate "Config Vars"
+6. Click "Reveal Config Vars" and add "PORT" key and value "8000", click "Add"
+7. Scroll down, locate "Buildpack" and click "Add", select "Python"
+8. Repeat step 7. only this time add "Node.js", make sure "Python" is first
+9. Scroll to the top and select "Deploy" tab
+10. Select GitHub as deployment method and search for your repository and link them together
+11. Scroll down and select either "Enable Automatic Deploys" or "Manual Deploy"
+12. Deployed site [Satoshi-s-Oven](https://satoshisoven-553cf9e9f5ec.herokuapp.com/)
+
+### Forking the GitHub Repository
+
+By forking the repository, we make a copy of the original repository on our GitHub account to view and change without affecting the original repository by using these steps:
+
+1. Log in to GitHub and locate [GitHub Repository Satoshi-s-Oven](https://github.com/YakivBrychuk/Satoshi-s-Oven/tree/main)
+2. At the top of the Repository(under the main navigation) locate "Fork" button.
+3. Now you should have a copy of the original repository in your GitHub account.
+
+### Local Clone
+
+1. Log in to GitHub and locate [GitHub Repository Satoshi-s-Oven](https://github.com/YakivBrychuk/Satoshi-s-Oven/tree/main)
+2. Under the repository name click "Clone or download"
+3. Click on the code button, select clone with HTTPS, SSH or GitHub CLI and copy the link shown.
+4. Open Git Bash
+5. Change the current working directory to the location where you want the cloned directory to be made.
+6. Type `git clone` and then paste The URL copied in the step 3.
+7. Press Enter and your local clone will be created.
+
 
