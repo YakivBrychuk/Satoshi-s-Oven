@@ -133,3 +133,22 @@ CI Python Linter was used to test run.py
 
 ![run.py linter check](/readme_images/lintercheck.png)
 </details>
+
+## Manual Testing
+
+The prtogram was manually tested extensively using VS code terminal, and when deployed on Heroku it was manually tested again.
+
+| Feature | Expected Result | Steps Taken | Actual Result | Screenshot |
+|---------------------------|-------------------------------------------------------------------|----------------------------------------------|---------------|--------------------------------------|
+| Welcome Screen            | Display welcome message | Open application                             | As Expected   | ![Welcome Screen](/readme_images/welcome_stage1.png) |
+| Menu Options              | Display menu options (New Order, Check Status)                  | Select 1 or 2                        | As Expected   | ![Menu Options](/readme_images/welcome_stage1.png) |
+| Start new order        | Show List of available locations for collection   | Input "1" from menu options | As Expected   | ![Start New Order](/readme_images/welcome_option1.png) |
+| Input invalid entry in menu of options              | Display a message: Invalid input, try again |  Input invalid option                        | As Expected   | ![Choose Pizza](/readme_images/welcone_invalid_option.png) |
+| Check the status of existing order          | Display message to input order number                  | Input 2 into options menu                    | As Expected   | ![Customize Pizza](/readme_images/test_option2_first_menu.png) |
+| Display Order     | Display the order details                                 | Input Order number         | As Expected   | ![Select Payment Method](/readme_images/display_order_option2.png) |
+| Input Invalid Order Number            | Display: You don't have access to this order or it doesn't exist.             | Input random number                         | As Expected   | ![Order Summary](/readme_images/message_invalid_order_nr.png) |
+| Final Confirmation        | Confirm and place the order                                       | Confirm order details                        | As Expected   | ![Final Confirmation]() |
+| Order Status              | Check the status of an existing order                             | Input order number to check status           | As Expected   | ![Order Status]() |
+| Repeat Order/Play Again   | Option to order more or finalize the session                      | Choose to order more or finalize             | As Expected   | ![Repeat Order]() |
+| Exit Application          | Close the application                                             | Choose to exit application                   | As Expected   | ![Exit Application]() |
+
